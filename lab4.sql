@@ -13,7 +13,6 @@ INSERT INTO Warehouses (code, location, capacity) VALUES
 	(4, 'Los Angeles', 2),
 	(5, 'San Francisco', 8);
 
-
 CREATE TABLE Boxes(
 	code character(4),
 	contents varchar(255),
@@ -21,9 +20,7 @@ CREATE TABLE Boxes(
 	warehouse integer
 );
 
-
-INSERT INTO Boxes(code, contents, value, warehouse)
-	VALUES
+INSERT INTO Boxes(code, contents, value, warehouse) VALUES
 	('0MN7', 'Rocks', 180, 3),
 	('4H8P', 'Rocks', 250, 1),
 	('4RT3', 'Scissors', 190, 4),
@@ -38,51 +35,28 @@ INSERT INTO Boxes(code, contents, value, warehouse)
 
 SELECT * FROM Warehouses;
 
-
-
-SELECT * FROM Boxes WHERE value>150;
-
-
+SELECT * FROM Boxes WHERE value > 150;
 
 SELECT DISTINCT ON (contents) * FROM Boxes;
 
+SELECT warehouse, COUNT(*) FROM Boxes GROUP BY warehouse;
 
-SELECT warehouse, COUNT(*)
-FROM Boxes
-GROUP BY warehouse;
+SELECT warehouse, COUNT(*) FROM Boxes WHERE warehouse > 2 GROUP BY warehouse;
 
-
-SELECT warehouse, COUNT(*)
-FROM Boxes WHERE warehouse > 2
-GROUP BY warehouse;
-
-
-INSERT INTO Warehouses (location, capacity)
-VALUES ('New York', 3);
+INSERT INTO Warehouses (location, capacity) VALUES ('New York', 3);
 
 SELECT * FROM Warehouses;
 
-
-
-INSERT INTO Boxes (code, contents, value, warehouse)
-VALUES ('H5RT', 'Papers', 200, 2);
+INSERT INTO Boxes (code, contents, value, warehouse) VALUES ('H5RT', 'Papers', 200, 2);
 
 SELECT * FROM Boxes;
 
-
-
-UPDATE Boxes SET value = value - (value*0.15)
-WHERE value = (
-SELECT DISTINCT value FROM Boxes
-ORDER BY value DESC
-limit 1 offset 2);
+UPDATE Boxes SET value = value - (value * 0.15) WHERE value = (
+	SELECT value FROM Boxes ORDER BY value DESC LIMIT 1 OFFSET 2);
 
 SELECT * FROM Boxes;
 
+DELETE FROM Boxes WHERE value < 150;
 
-DELETE * FROM Boxes Where value < 150;
-
-
-
-DELETE FROM Boxes WHERE warehouse = (SELECT code FROM Warehouses WHERE location = 'New York' limit 1)
-RETURNING *;
+DELETE FROM Boxes WHERE warehouse = (SELECT code FROM Warehouses WHERE location = 'New York' LIMIT 1) RETURNING *;
+    
