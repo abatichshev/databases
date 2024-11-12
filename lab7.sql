@@ -1,7 +1,3 @@
-CREATE TABLE countries (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(50)
-);
 CREATE TABLE employees (
     id SERIAL PRIMARY KEY,
     name VARCHAR(50),
@@ -13,15 +9,11 @@ CREATE TABLE departments (
     budget INTEGER
 );
 
-INSERT INTO countries (name)
-VALUES ('Kazakhstan'),
-       ('USA'),
-       ('Canada');
 
 INSERT INTO employees (name, surname, salary)
 VALUES ('Marshall', 'New', 50000),
-       ('Asan', 'Mathers', 65000),
-       ('Dan', 'Ball', 40000);
+       ('Asan', 'Mathers', 90000),
+       ('Dan', 'Ball', 45000);
 
 INSERT INTO departments (budget)
 VALUES(100000),
@@ -42,7 +34,7 @@ SELECT * FROM employees WHERE salary < 70000 AND salary > 40000;
 
 
 CREATE INDEX idx_employees_name_sub ON employees ((substring(name FROM 1 FOR 4)));
-SELECT * FROM employees WHERE substring(name FROM 1 FOR 4) = 'Dan';
+SELECT * FROM employees WHERE substring(name FROM 1 FOR 4) = 'Marshall';
 
 
 CREATE INDEX idx_departments_budget_salary2 ON departments (budget);
